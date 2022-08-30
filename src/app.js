@@ -6,12 +6,14 @@ const PORT = 3000
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use((req, res, next) => {
+  console.log(`${req.method} - ${req.path}`)
+  next()
+})
 
 app.use('/', routes)
 
-export function startApp() {
+export default function startApp() {
   app.listen(PORT, () => console.log(`server is running on http://localhost:${PORT}`))
 }
 
-export default app
